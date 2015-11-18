@@ -12,3 +12,6 @@ Learn the basics of Haml and become familiarized with writing markup in a clean,
 * A text editor of your choosing (Needs to support Haml)
 
 [![Intro to Haml](http://i.imgur.com/PiNgnJn.png)](http://tgaeta.github.io/intro-to-haml/#/)
+
+#### Don't Peek
+[Completed / DRY'd Out HTML](http://codepen.io/tgaeta/pen/ZbPJgK)
