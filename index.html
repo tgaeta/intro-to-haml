@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 
 		<title>Intro to Haml | Tony Gaeta</title>
+		<link href='lib/images/favicon.ico' rel='shortcut icon' type='image/x-icon'>
 
 		<meta name="description" content="Intro to Haml Meetup held at The Iron Yard in DTSP on 18 Nov 2015">
 		<meta name="author" content="Tony Gaeta">
@@ -15,10 +16,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/railscasts.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -73,8 +74,8 @@
 				</section>
 
 				<section>
-					<h2>To this!</h2>
-					<pre><code class="hlhaml" data-trim contenteditable>
+					<h2>...To This!</h2>
+					<pre><code class="hlhaml" data-trim>
 #content
   .left.column
     %h2 Welcome to our site!
@@ -97,76 +98,72 @@
 				</section>
 
 				<section>
-					<h2>Tags</h2>
-					<p>In Haml, we write a tag by using the percent sign and then the name of the tag. This works for <pre><code>%strong, %div, %body, %html</code></pre> or any tag you want. Then, after the name of the tag is <pre><code>=</code></pre> which tells Haml to evaluate Ruby code to the right and then print out the return value as the contents of the tag. Unlike the ERB, Haml will automatically detect newlines in the return value and format the tag properly.
+					<h2>The Basics</h2>
+					<p>In Haml, we write a tag by using the percent sign and then the name of the tag. This works for any tag you want:
+						<pre><code>%strong, %div, %body, %html
+					</code></pre></p>
+
+					<p>The equal-sign tells Haml to evaluate Ruby code to the right and then print out the return value as the contents of the tag. Unlike the ERB, Haml will automatically detect newlines in the return value and format the tag properly.</p>
+					<pre><code>
+%strong= item.title
+				</code></pre></p>
 				</section>
 
 				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
+					<h2>Basics Cont.</h2>
+					<p>Haml relies on indenting for formating. You indent using two spaces. Add an additional two spaces for every nested level of tags.</p>
+					<pre><code class="hlhaml" data-trim>
+#content
+  .left.column
+    %h2 Welcome to our site!
+    %p= print_information
+  .right.column
+    = render :partial => "sidebar"
+					</code></pre>
+					<p>We have to do this because HTML is a nested data structure. The indentation of the file is translated into HTML's opening and closing tags.</p>
 				</section>
 
 				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
+					<h2>Pros</h2>
+					<p>Aside from the known fact that Haml is DRY and consise, here are a few other reasons Haml is awesome:</p>
+					<ul>
+						<li>Easy to learn</li>
+						<li>Easier to focus on what matters</li>
+						<li>Easier to read and write</li>
+						<li>No need to worry about closing tags</li>
+						<li>Write your markup quickly</li>
+					</ul>
 				</section>
 
 				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
+					<h2>Cons</h2>
+					<p>Believe it or not, you can write ugly looking code in Haml:</p>
+					<pre><code class="hlhaml" data-trim>
+					%p
+  Please,
+  %strong
+    For the love of
+    = succeed "," do
+      %a(href="http://www.god.com/") God
+  don't use
+  %a(href="http://haml-lang.com") Haml
+  for marking-up your content!
+					</code></pre>
+					<p>Obviously much prettier using Markdown:</p>
+					<pre><code class="hlmd" data-trim>
+Please, **For the love of [God](http://www.god.com/),**
+don't use [Haml](http://haml-lang.com) for marking-up your content!
 					</code></pre>
 				</section>
 
 				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
+					<h2>Exercise</h2>
+
+
 				</section>
 
 				<section>
-					<h2>Much more</h2>
+					<h2>Resources</h2>
 					<ul>
 						<li>Right-to-left support</li>
 						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
@@ -176,12 +173,9 @@ Reveal.addEventListener( 'customevent', function() {
 					</ul>
 				</section>
 
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
+				<section>
+					<h1>The End</h1>
+						<p>Thanks for joining me today! If you have any questions regarding Haml or The Iron Yard, just ask.</p>
 				</section>
 
 			</div>
